@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./nginx.prod.conf:/etc/nginx/nginx.conf
+      - /etc/letsencrypt/:/etc/letsencrypt/
+      - ./static:/var/www/lookquran.com
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - lookquran
+
+  lookquran:
+    image: node:lts-alpine
+    container_name: lookquran
+    environment:
+      NODE_ENV: production
+    volumes:
+      - ./api:/app
+    working_dir: /app
+    command: ["node", "server"]
+    restart: on-failure
+    expose:
+      - "8080"
