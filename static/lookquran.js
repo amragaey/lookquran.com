@@ -17,7 +17,7 @@ $(function () {
 		$.getJSON("http://api.alquran.cloud/v1/edition?format=audio&language=" + lang, function (data) {
 			var recitersList = [];
 			$.each(data.data, function (key, val) {
-				recitersList.push(`<option value="${val.identifier}">${JSON.stringify(val.name).slice(1, -1)}</option>`);
+				recitersList.push('<option value="' + val.identifier + '">' + JSON.stringify(val.name).slice(1, -1) + '</option>');
 			});
 
 			$("#recList").html(recitersList.join(""));
@@ -167,7 +167,7 @@ $(function () {
 			if ($(this).hasClass("fa-play-circle")) {
 				var selectedRec = $("#recList").val();
 
-				audio.src = `${baseURL}/audio/${selectedRec}${datasrc}`;
+				audio.src = baseURL+"/audio/"+selectedRec+datasrc;
 				$(this).removeClass("fa-play-circle");
 				$(this).addClass("fa-pause-circle");
 				audio.play();
