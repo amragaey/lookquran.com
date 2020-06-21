@@ -14,7 +14,7 @@ $(function () {
 	initializerecitersList('ar');
 
 	function initializerecitersList(lang) {
-		$.getJSON("http://api.alquran.cloud/v1/edition?format=audio&language=" + lang, function (data) {
+		$.getJSON("https://api.alquran.cloud/v1/edition?format=audio&language=" + lang, function (data) {
 			var recitersList = [];
 			$.each(data.data, function (key, val) {
 				recitersList.push('<option value="' + val.identifier + '">' + JSON.stringify(val.name).slice(1, -1) + '</option>');
