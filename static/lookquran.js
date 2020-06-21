@@ -1,5 +1,6 @@
 $(function () {
-	var baseURL = "/api";
+	// Reset this to /api
+	var baseURL = "http://localhost:8080";
 	var currPage = 1;
 	var perPage = 30;
 	var count = 0;
