@@ -11,6 +11,19 @@ $(function () {
 		$(".ayah-item").removeClass("playing");
 	};
 
+	initializerecitersList('ar');
+
+	function initializerecitersList(lang) {
+		$.getJSON("http://api.alquran.cloud/v1/edition?format=audio&language=" + lang, function (data) {
+			var recitersList = [];
+			$.each(data.data, function (key, val) {
+				recitersList.push(`<option value="${val.identifier}">${JSON.stringify(val.name).slice(1, -1)}</option>`);
+			});
+
+			$("#recList").html(recitersList.join(""));
+		});
+	};
+
 	function arNum(en) {
 		return ("" + en).replace(/[0-9]/g, function (t) {
 			return "٠١٢٣٤٥٦٧٨٩".substr(+t, 1);
@@ -152,7 +165,9 @@ $(function () {
 			audio.pause();
 			$(".ayah-item").removeClass("playing");
 			if ($(this).hasClass("fa-play-circle")) {
-				audio.src = baseURL + "/audio" + datasrc;
+				var selectedRec = $("#recList").val();
+
+				audio.src = `${baseURL}/audio/${selectedRec}${datasrc}`;
 				$(this).removeClass("fa-play-circle");
 				$(this).addClass("fa-pause-circle");
 				audio.play();
@@ -210,18 +225,18 @@ $(function () {
 
 				elm.append(
 					"<div class='social-links-demo tooltiptext'><a href=" +
-						fb +
-						" title='شارك على فيسبوك' target='popup' onclick=\"window.open(" +
-						fb +
-						",'popup','width=600,height=600,scrollbars=no,resizable=no')\"><i class='fab fa-facebook-square'></i></a><a href=" +
-						twitter +
-						" title='غرّد' target='popup' onclick=\"window.open(" +
-						twitter +
-						",'popup','width=600,height=600,scrollbars=no,resizable=no')\"><i class='fab fa-twitter-square'></i></a><a href=" +
-						whatsapp +
-						" title='ارسل على الواتساب' target='popup' onclick=\"window.open(" +
-						whatsapp +
-						",'popup','width=600,height=600,scrollbars=no,resizable=no')\"><i class='fab fa-whatsapp-square'></i></a></div>"
+					fb +
+					" title='شارك على فيسبوك' target='popup' onclick=\"window.open(" +
+					fb +
+					",'popup','width=600,height=600,scrollbars=no,resizable=no')\"><i class='fab fa-facebook-square'></i></a><a href=" +
+					twitter +
+					" title='غرّد' target='popup' onclick=\"window.open(" +
+					twitter +
+					",'popup','width=600,height=600,scrollbars=no,resizable=no')\"><i class='fab fa-twitter-square'></i></a><a href=" +
+					whatsapp +
+					" title='ارسل على الواتساب' target='popup' onclick=\"window.open(" +
+					whatsapp +
+					",'popup','width=600,height=600,scrollbars=no,resizable=no')\"><i class='fab fa-whatsapp-square'></i></a></div>"
 				);
 
 				elm.on("click", "div", function (e) {

@@ -18,7 +18,7 @@ const root = process.cwd();
 let server = http.createServer(function (req, res) {
 	if (/^\/(search)\?.*/.test(req.url)) return searchQuran(req, res);
 	else if (/^\/(tafsir)\/[0-9]+\/[0-9]+$/.test(req.url)) return getTafsir(req, res);
-	else if (/^\/(audio)\/[0-9]+\/[0-9]+$/.test(req.url)) return playQuran(req, res);
+	else if (/^\/(audio)\/.*\/[0-9]+\/[0-9]+$/.test(req.url)) return playQuran(req, res);
 	else {
 		res.writeHead(404, { "Content-Type": "text/plain" });
 		res.end("Not found.");
@@ -148,10 +148,13 @@ function searchQuran(req, res) {
 
 function playQuran(req, res) {
 	let path = url.parse(req.url, true).path;
-	let [_, __, surah, ayah] = path.split("/");
-	let ayahLine = getAyahLine(surah, ayah);
+	let [_, __,recName, surah, ayah] = path.split("/");
 
-	https.get("https://cdn.alquran.cloud/media/audio/ayah/ar.alafasy/" + ayahLine, function (res2) {
+	let ayahLine = getAyahLine(surah, ayah);
+	
+	console.info("fetching data from:"+"https://cdn.alquran.cloud/media/audio/ayah/"+recName +"/" + ayahLine);
+
+	https.get("https://cdn.alquran.cloud/media/audio/ayah/"+recName +"/" + ayahLine, function (res2) {
 		delete res2.headers["set-cookie"];
 		res.writeHead(200, res2.headers);
 		return res2.pipe(res, { end: true });

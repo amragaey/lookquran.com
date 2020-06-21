@@ -21,6 +21,22 @@ ol {
     justify-content: center;
 }
 
+.list {
+    margin-top:20px;
+    font: size 0.9rem;
+}
+
+.list select{    
+    border-radius: 10px;
+    box-shadow: 0 0 10px #E8E8E8 inset;
+    border: 0;
+}
+
+.list select:focus{
+    border: 0px;
+    outline-width: 0px;
+}
+
 /*
 This is the parent `<div>` that contains the content area.
 */
