@@ -11,18 +11,40 @@ $(function () {
 		$(".ayah-item").removeClass("playing");
 	};
 
-	initializerecitersList('ar');
+	initializeRecitersList("ar");
 
-	function initializerecitersList(lang) {
+	function initializeRecitersList(lang) {
 		$.getJSON("https://api.alquran.cloud/v1/edition?format=audio&language=" + lang, function (data) {
-			var recitersList = [];
-			$.each(data.data, function (key, val) {
-				recitersList.push('<option value="' + val.identifier + '">' + JSON.stringify(val.name).slice(1, -1) + '</option>');
+			var supportedReciters = [
+				"ar.abdulbasitmurattal",
+				"ar.abdullahbasfar",
+				"ar.abdulsamad",
+				"ar.abdurrahmaansudais",
+				"ar.ahmedajamy",
+				"ar.alafasy",
+				"ar.aymanswoaid",
+				"ar.hanirifai",
+				"ar.hudhaify",
+				"ar.husary",
+				"ar.husarymujawwad",
+				"ar.mahermuaiqly",
+				"ar.minshawimujawwad",
+				"ar.saoodshuraym",
+			];
+
+			var optionsList = [];
+
+			var recitersList = data.data.filter(function (reciter) {
+				return supportedReciters.indexOf(reciter.identifier) !== -1;
 			});
 
-			$("#recList").html(recitersList.join(""));
+			recitersList.forEach(function (val) {
+				optionsList.push('<option value="' + val.identifier + '">' + JSON.stringify(val.name).slice(1, -1) + "</option>");
+			});
+
+			$("#recList").html(optionsList.join(""));
 		});
-	};
+	}
 
 	function arNum(en) {
 		return ("" + en).replace(/[0-9]/g, function (t) {
@@ -167,7 +189,7 @@ $(function () {
 			if ($(this).hasClass("fa-play-circle")) {
 				var selectedRec = $("#recList").val();
 
-				audio.src = baseURL+"/audio/"+selectedRec+datasrc;
+				audio.src = baseURL + "/audio/" + selectedRec + datasrc;
 				$(this).removeClass("fa-play-circle");
 				$(this).addClass("fa-pause-circle");
 				audio.play();
@@ -225,18 +247,18 @@ $(function () {
 
 				elm.append(
 					"<div class='social-links-demo tooltiptext'><a href=" +
-					fb +
-					" title='شارك على فيسبوك' target='popup' onclick=\"window.open(" +
-					fb +
-					",'popup','width=600,height=600,scrollbars=no,resizable=no')\"><i class='fab fa-facebook-square'></i></a><a href=" +
-					twitter +
-					" title='غرّد' target='popup' onclick=\"window.open(" +
-					twitter +
-					",'popup','width=600,height=600,scrollbars=no,resizable=no')\"><i class='fab fa-twitter-square'></i></a><a href=" +
-					whatsapp +
-					" title='ارسل على الواتساب' target='popup' onclick=\"window.open(" +
-					whatsapp +
-					",'popup','width=600,height=600,scrollbars=no,resizable=no')\"><i class='fab fa-whatsapp-square'></i></a></div>"
+						fb +
+						" title='شارك على فيسبوك' target='popup' onclick=\"window.open(" +
+						fb +
+						",'popup','width=600,height=600,scrollbars=no,resizable=no')\"><i class='fab fa-facebook-square'></i></a><a href=" +
+						twitter +
+						" title='غرّد' target='popup' onclick=\"window.open(" +
+						twitter +
+						",'popup','width=600,height=600,scrollbars=no,resizable=no')\"><i class='fab fa-twitter-square'></i></a><a href=" +
+						whatsapp +
+						" title='ارسل على الواتساب' target='popup' onclick=\"window.open(" +
+						whatsapp +
+						",'popup','width=600,height=600,scrollbars=no,resizable=no')\"><i class='fab fa-whatsapp-square'></i></a></div>"
 				);
 
 				elm.on("click", "div", function (e) {

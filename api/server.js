@@ -148,13 +148,11 @@ function searchQuran(req, res) {
 
 function playQuran(req, res) {
 	let path = url.parse(req.url, true).path;
-	let [_, __,recName, surah, ayah] = path.split("/");
+	let [_, __, recName, surah, ayah] = path.split("/");
 
 	let ayahLine = getAyahLine(surah, ayah);
-	
-	console.info("fetching data from:"+"https://cdn.alquran.cloud/media/audio/ayah/"+recName +"/" + ayahLine);
 
-	https.get("https://cdn.alquran.cloud/media/audio/ayah/"+recName +"/" + ayahLine, function (res2) {
+	https.get("https://cdn.islamic.network/quran/audio/64/" + recName + "/" + ayahLine + ".mp3", function (res2) {
 		delete res2.headers["set-cookie"];
 		res.writeHead(200, res2.headers);
 		return res2.pipe(res, { end: true });
