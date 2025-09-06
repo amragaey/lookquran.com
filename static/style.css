@@ -2,10 +2,24 @@
     font-family: 'Scheherazade', Verdana, Arial;
 }
 
+:root{
+    --bg-color: #fff;
+    --font-color: #777;
+    --ayah-color: #777;
+    --header-color: #333;
+}
+html[data-theme='dark'] {
+    --bg-color: #121212;
+    --ayah-color: #121212;
+    --font-color: #eee;
+    --header-color: #ddd;
+  }
 body {
     font-size: 1rem;
-    color: #777;
+    color: var(--font-color);
+    background-color: var(--bg-color);
 }
+
 
 em {
     color: tomato;
@@ -30,6 +44,7 @@ ol {
     border-radius: 10px;
     box-shadow: 0 0 10px #E8E8E8 inset;
     border: 0;
+    color: var(--ayah-color);
 }
 
 .list select:focus{
@@ -53,7 +68,7 @@ The content `<div>` is where all your content goes.
 
 .header {
     margin: 0;
-    color: #333;
+    color: var(--header-color);
     text-align: center;
     padding: 2.5em 2em 0;
 }
@@ -66,7 +81,8 @@ The content `<div>` is where all your content goes.
 
 .header h2 {
     font-weight: 300;
-    color: #bbb;
+    color: var(--header-color);
+    opacity: 0.8;
     padding: 0;
     margin-top: 0;
 }
@@ -82,6 +98,12 @@ The content `<div>` is where all your content goes.
 .content {
     padding-left: 2em;
     padding-right: 2em;
+}
+
+.pure-form .pure-input-1-3 {
+    color: var(--ayah-color);
+    display: block;
+    margin: 0.5em auto;
 }
 
 /* label {
@@ -103,18 +125,28 @@ label:before {
 }
 
 .ayah-item {
-    padding: 0.5em 1em;
+    box-sizing: border-box;
+    padding: 0.5em 2em 0.5em 1em;
     border-bottom: 1px solid #ddd;
 }
 
+.ayah-item:hover,.ayah-item:hover .ayah-content {
+    color: var(--ayah-color)
+}
 .ayah-item:hover {
     background: #efefef;
 }
 
+.ayat{
+    width: 85%;
+}
 .ayat .playing {
     background: cornsilk;
 }
 
+.ayat .playing, .ayat .playing .ayah-content{
+    color: var(--ayah-color)
+}
 .ayah-name {
     margin: 0 0 5px;
     text-transform: uppercase;
@@ -138,7 +170,7 @@ label:before {
 }
 
 .ayah-content {
-    color: #777;
+    color: var(--font-color);
     font-size: 1.25em;
     font-weight: normal;
 }
@@ -203,7 +235,7 @@ label:before {
 
 .pagination a {
     cursor: pointer;
-    color: black;
+    color: var(--font-color);
     float: right;
     padding: 3px 10px;
     margin: 3px;
@@ -214,8 +246,8 @@ label:before {
 }
 
 .pagination a.active {
-    background-color: #888;
-    color: white;
+    background-color: var(--font-color);
+    color: var(--bg-color);
 }
 
 .pagination a.dots {
@@ -223,7 +255,8 @@ label:before {
 }
 
 .pagination a:hover:not(.active):not(.dots) {
-    background-color: #ddd;
+    background-color: var(--font-color);
+    color: var(--bg-color);
 }
 
 @media only screen and (max-width: 480px) {
@@ -266,4 +299,23 @@ label:before {
 
 .social-links-demo .fa-whatsapp-square {
     color: #4FCE5D;
+}
+#theme-toggle:hover, #theme-toggle:focus{
+    outline: none;
+}
+#theme-toggle{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: var(--font-color);
+    border: none;
+    color: var(--bg-color);
+    z-index: 3;
+    padding:0.3em 1.2em;
+    margin:0 0.3em 0.3em 0;
+    border-radius:2em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-weight:300;
+    text-align:center;
 }
